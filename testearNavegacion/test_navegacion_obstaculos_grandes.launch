@@ -1,0 +1,21 @@
+<launch>
+	
+	<include file="$(find stdr_robot)/launch/robot_manager.launch" />
+	
+	<node type="stdr_server_node" pkg="stdr_server" name="stdr_server" output="screen" args="$(find stdr_resources)/maps/test_navegacion_obstaculos_grandes.yaml">
+	    <remap from="tf" to="tf_sim"/>
+	</node>
+
+	<node pkg="tf" type="static_transform_publisher" name="world2map" args="0 0 0 0 0 0  world map 100" >
+	    <remap from="tf" to="tf_sim"/>
+	</node>	
+	
+	<include file="$(find stdr_gui)/launch/stdr_gui.launch"/>
+	
+	<node pkg="stdr_robot" type="robot_handler" name="$(anon robot_spawn)" args="add $(find stdr_resources)/resources/robots/amigobot.xml 1 7.5 0" >
+	    <remap from="tf" to="tf_sim"/>
+	</node>
+	
+	<include file="/home/alumno/robotica_movil_ws/src/aux_files/launch/aux_files.launch"/>
+	
+</launch>
